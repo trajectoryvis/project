@@ -9,18 +9,18 @@ import java.util.Scanner;
 public class Reader {
 	private InputStream in;
 	private int personnr = 0;
-	
+
 	public Reader(InputStream in){
 		this.in = in;
 	}//constructor
-	
+
 	public ArrayList<String> read() throws IOException{
 		ArrayList<String> objects = new ArrayList<String>();
 		Scanner scanner = new Scanner(in);
 		scanner.useDelimiter("\n");
 		System.out.println("Number of splines/people: " + scanner.next()); //the first line, number of splines/persons
-		
-		FileWriter writer = new FileWriter("C:/Users/Joe/Documents/Skola/kex/project/JSONcreator/src/output.txt");
+
+		FileWriter writer = new FileWriter("/Users/christinasonebo/Desktop/project/JSONcreator/src/data.json");
 		PrintWriter printer = new PrintWriter(writer);
 		while(scanner.hasNext()){
 			int controlpoints = Integer.parseInt(scanner.next().replaceAll("\\p{C}", ""));	//apparently there are some unprintable hidden characters in the text causing errors, replace them with nothing
@@ -30,8 +30,8 @@ public class Reader {
 				Double y = Double.parseDouble(temp[1]);
 				int frame = Integer.parseInt(temp[2]);
 				//will not use temp[3] = gaze direction
-				printer.print("{ " + "\"person\":" + personnr + ", " + "\"x\":" + x + ", " + "\"y\":" + y + ", " + "\"frame\":" + frame + "}");
-				
+				printer.print("{ " + "\"person\":" + personnr + ", " + "\"x\":" + x + ", " + "\"y\":" + y + ", " + "\"frame\":" + frame + "}," + "\n");
+
 			}
 			personnr++;
 		}
@@ -39,5 +39,5 @@ public class Reader {
 		scanner.close();
 		return objects;
 	}
-	
+
 }//class
