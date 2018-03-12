@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<style>
+.axis path,
+.axis line {
+    fill: none;
+    stroke: #eee;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: sans-serif;
+    font-size: 11px;
+}
+
+.loading {
+    font-family: sans-serif;
+    font-size: 15px;
+}
+
+.circle {
+    fill: #222;
+}
+</style>
+
+
+<div id="graph"></div>
+
+<script src="http://d3js.org/d3.v2.min.js"></script>
+<script >
+
+var newData = [];
+
+d3.json("data.json", function(data){
+for(var i = 0; i < 40; i++){ //40 first points belong to person 0.
+    newData.push(data[i]);
+  }
+var xMin = d3.min(newData, function(d){return d.x}), //max and min
+    xMax = d3.max(newData, function(d){return d.x}),
+    yMin = d3.min(newData, function(d){return d.y}),
+    yMax = d3.max(newData, function(d){return d.y});
+
+var w = 940,
+    h = 300,
+    pad = 20,
+    left_pad = 100;
+
+var svg = d3.select("#graph")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+
+var xScale = d3.scale.linear().domain([xMin,xMax]).range([left_pad, w-pad]),
+    yScale = d3.scale.linear().domain([yMax,yMin]).range([pad, h-pad*2]);
+
+var xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
+    yAxis = d3.svg.axis().scale(yScale).orient("left");
+
+svg.append("g")
+   .attr("class", "axis")
+   .attr("transform", "translate(0, "+(h-pad)+")")
+   .call(xAxis);
+
+svg.append("g")
+   .attr("class", "axis")
+   .attr("transform", "translate("+(left_pad-pad)+", 0)")
+   .call(yAxis);
+
+svg.selectAll("circle")
+   .data(newData)
+   .enter()
+   .append("circle")
+   .attr("class", "circle")
+   .attr("cx", function (d) { return xScale(d.x) })
+   .attr("cy", function (d) { return yScale(d.y) })
+   .attr("r", 1);
+
+});
+
+
+
+</script>
