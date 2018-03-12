@@ -26,22 +26,20 @@
 
 <div id="graph"></div>
 
-<script src="http://d3js.org/d3.v2.min.js"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script >
 
 var newData = [];
 
 d3.json("data.json", function(data){
-for(var i = 0; i < 40; i++){ //40 first points belong to person 0.
-    newData.push(data[i]);
-  }
-var xMin = d3.min(newData, function(d){return d.x}), //max and min
-    xMax = d3.max(newData, function(d){return d.x}),
-    yMin = d3.min(newData, function(d){return d.y}),
-    yMax = d3.max(newData, function(d){return d.y});
+
+var xMin = d3.min(data, function(d){return d.x}), //max and min
+    xMax = d3.max(data, function(d){return d.x}),
+    yMin = d3.min(data, function(d){return d.y}),
+    yMax = d3.max(data, function(d){return d.y});
 
 var w = 940,
-    h = 300,
+    h = 500,
     pad = 20,
     left_pad = 100;
 
@@ -51,11 +49,14 @@ var svg = d3.select("#graph")
             .attr("height", h);
 
 
-var xScale = d3.scale.linear().domain([xMin,xMax]).range([left_pad, w-pad]),
-    yScale = d3.scale.linear().domain([yMax,yMin]).range([pad, h-pad*2]);
+var xScale = d3.scaleLinear().domain([xMin,xMax]).range([left_pad, w-pad]),
+    yScale = d3.scaleLinear().domain([yMax,yMin]).range([pad, h-pad*2]);
 
-var xAxis = d3.svg.axis().scale(xScale).orient("bottom"),
-    yAxis = d3.svg.axis().scale(yScale).orient("left");
+var xAxis = d3.axisBottom(xScale),
+    yAxis = d3.axisLeft(yScale);
+
+var cValue = function(d) { return d.person;},
+    color = d3.scaleOrdinal(d3.schemeCategory10);
 
 svg.append("g")
    .attr("class", "axis")
@@ -68,13 +69,14 @@ svg.append("g")
    .call(yAxis);
 
 svg.selectAll("circle")
-   .data(newData)
+   .data(data)
    .enter()
    .append("circle")
    .attr("class", "circle")
    .attr("cx", function (d) { return xScale(d.x) })
    .attr("cy", function (d) { return yScale(d.y) })
-   .attr("r", 1);
+   .attr("r", 1)
+   .style("fill",function(d) { return color(d.person);} );
 
 });
 
