@@ -68,6 +68,10 @@ svg.append("g")
    .attr("transform", "translate("+(left_pad-pad)+", 0)")
    .call(yAxis);
 
+svg.append("g")
+    .attr("class", "brush")
+    .call(d3.brushY().on("brush",brushed));
+
 svg.selectAll("circle")
    .data(data)
    .enter()
@@ -78,6 +82,20 @@ svg.selectAll("circle")
    .attr("r", 1)
    .style("fill",function(d) { return color(d.person);} );
 
+   //the function that takes care of what happens on "brush" event
+   function brushed() {
+     var area = d3.event.selection;
+     var miny = area[0];
+     var maxy = area[1];
+     svg.selectAll("circle").style("fill",function(d){
+       // console.log("miny: " + miny + " maxy: " + maxy);
+       if(yScale(d.y) >= miny && yScale(d.y) <= maxy){
+         return "red";
+       }else{
+         return "gray";
+       }
+     });
+   }
 });
 
 
