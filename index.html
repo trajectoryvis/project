@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 
 <style>
+
+.selecting path {
+  fill-opacity: .2;
+}
+
+.selecting path.selected {
+  stroke: red;
+  stroke-width: 2px;
+}
+
 .axis path,
 .axis line {
     fill: none;
@@ -21,6 +31,7 @@
 .circle {
     fill: #222;
 }
+
 </style>
 
 
@@ -88,16 +99,21 @@ d3.json("data.json", function(data){
 
   svg.append("g")
       .attr("class", "brush")
-      .call(d3.brushY().on("brush",brushed));
+      .call(d3.brushY()
+      .on("start", brushstart)
+      .on("brush",brushed));
 
   svg.append("path")
     .datum(person1)
+    .attr("class", "line")
     .attr("fill", "none")
     .attr("stroke", "steelblue")
     .attr("stroke-linejoin", "round")
     .attr("stroke-linecap", "round")
     .attr("stroke-width", 1.5)
     .attr("d", line);
+
+
   var dd = data.slice(0,100);
   console.log(data.length);
 
@@ -113,6 +129,12 @@ d3.json("data.json", function(data){
      .attr("r", 2)
      .style("fill",function(d) { return color(d.person);} );
 
+
+     //Det här fungerar ju inte
+    function brushstart() {
+     svg.classed("selecting", true);
+    }
+
      //the function that takes care of what happens on "brush" event
    function brushed() {
      var area = d3.event.selection;
@@ -123,10 +145,15 @@ d3.json("data.json", function(data){
        if(yScale(d.y) >= miny && yScale(d.y) <= maxy){
          return "1";
        }else{
-         return "0.4";
+         return "0.2";
        }
      });
-   }
+
+     var s = d3.event.target.extent();  //nope
+     var symbol = svg.selectAll("line");
+     symbol.classed("selected", function(d) { return s[0] <= (d = xScale(d)) && d <= s[1]; });  //funkar inte just nu
+
+   }//brushed
 });
 
 
