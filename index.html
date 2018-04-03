@@ -36,6 +36,13 @@ var newData = [];
 
 d3.json("data.json", function(data){
 
+  var person1 = [];
+
+  for(i = 0; i < data.length; i++){
+    if(data[i].person == 0 ){
+      person1.push(data[i]);
+    }
+  }
 
 
   var xMin = d3.min(data, function(d){return d.x}), //max and min
@@ -64,6 +71,11 @@ d3.json("data.json", function(data){
   var cValue = function(d) { return d.person;},
       color = d3.scaleOrdinal(d3.schemeCategory10);
 
+  var line = d3.line()
+    .x(function(d){return xScale(d.x);})
+    .y(function(d){return yScale(d.y);});
+
+
   svg.append("g")
      .attr("class", "axis")
      .attr("transform", "translate(0, "+(h-pad)+")")
@@ -78,16 +90,18 @@ d3.json("data.json", function(data){
       .attr("class", "brush")
       .call(d3.brushY().on("brush",brushed));
 
+  svg.append("path")
+    .datum(person1)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-linejoin", "round")
+    .attr("stroke-linecap", "round")
+    .attr("stroke-width", 1.5)
+    .attr("d", line);
   var dd = data.slice(0,100);
   console.log(data.length);
 
-  var person1 = [];
 
-    for(i = 0; i < data.length; i++){
-      if(data[i].person == 0 ){
-        person1.push(data[i]);
-      }
-    }
 
   svg.selectAll("circle")
      .data(person1)
