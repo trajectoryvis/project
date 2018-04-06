@@ -48,9 +48,9 @@ var newData = [];
 d3.json("data.json", function(data){
 
   var person1 = [];
-
+  var numberOfPeople = 200;
   for(i = 0; i < data.length; i++){
-    if(data[i].person == 0 ){
+    if(data[i].person <= numberOfPeople-1 ){
       person1.push(data[i]);
     }
   }
@@ -62,8 +62,8 @@ d3.json("data.json", function(data){
       yMax = d3.max(data, function(d){return d.y});
 
 
-  var w = 940,
-      h = 500,
+  var w = 1080,
+      h = 600,
       pad = 20,
       left_pad = 100;
 
@@ -103,15 +103,25 @@ d3.json("data.json", function(data){
       .on("start", brushstart)
       .on("brush",brushed));
 
-  svg.append("path")
-    .datum(person1)
-    .attr("class", "line")
-    .attr("fill", "none")
-    .attr("stroke", "steelblue")
-    .attr("stroke-linejoin", "round")
-    .attr("stroke-linecap", "round")
-    .attr("stroke-width", 1.5)
-    .attr("d", line);
+  for(i = 0; i < numberOfPeople; i++){
+    var tempperson = [];
+    for(j = 0; j < person1.length; j++){
+      if(person1[j].person == i){
+        tempperson.push(person1[j]);
+      }
+    }
+    // console.log(person);
+    svg.append("path")
+      .datum(tempperson)
+      .attr("class", "line")
+      .attr("fill", "none")
+      .attr("stroke", "steelblue")
+      .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+      .attr("stroke-width", 1.5)
+      .attr("d", line);
+  }
+
 
 
   var dd = data.slice(0,100);
@@ -119,15 +129,15 @@ d3.json("data.json", function(data){
 
 
 
-  svg.selectAll("circle")
-     .data(person1)
-     .enter()
-     .append("circle")
-     .attr("class", "circle")
-     .attr("cx", function (d) { return xScale(d.x) })
-     .attr("cy", function (d) { return yScale(d.y) })
-     .attr("r", 2)
-     .style("fill",function(d) { return color(d.person);} );
+  // svg.selectAll("circle")
+  //    .data(person1)
+  //    .enter()
+  //    .append("circle")
+  //    .attr("class", "circle")
+  //    .attr("cx", function (d) { return xScale(d.x) })
+  //    .attr("cy", function (d) { return yScale(d.y) })
+  //    .attr("r", 2)
+  //    .style("fill",function(d) { return color(d.person);} );
 
 
      //Det här fungerar ju inte
