@@ -55,11 +55,11 @@ d3.json("data.json", function(data){
   //    .attr("class", "axis")
   //    .attr("transform", "translate("+(left_pad-pad)+", 0)")
   //    .call(yAxis);
-
-  svg.append("g")
-      .attr("class", "brush")
-      .call(d3.brushY()
-      .on("brush",brushed));
+  //
+  // svg.append("g")
+  //     .attr("class", "brush")
+  //     .call(d3.brushY()
+  //     .on("brush",brushed));
 
   for(i = 0; i < numberOfPeople; i++){
     var tempperson = [];
@@ -81,21 +81,37 @@ d3.json("data.json", function(data){
   }
 
 
-
   // var dd = data.slice(0,100);
   // console.log(data.length);
 
 
 
-  // svg.selectAll("circle")
-  //    .data(person1)
-  //    .enter()
-  //    .append("circle")
-  //    .attr("class", "circle")
-  //    .attr("cx", function (d) { return xScale(d.x) })
-  //    .attr("cy", function (d) { return yScale(d.y) })
-  //    .attr("r", 2)
-  //    .style("fill",function(d) { return color(d.person);} );
+  svg.selectAll("circle")
+     .data(person1)
+     .enter()
+     .append("circle")
+     .attr("class", "circle")
+     .attr("cx", function (d) { return xScale(d.x) })
+     .attr("cy", function (d) { return yScale(d.y) })
+     .attr("r", 2)
+     .style("fill",function(d) { return color(d.person);} )
+     .on("click", function(d1){
+       svg.selectAll("circle").attr("r", function(d){
+         if(d.person == d1.person){
+           return "10";
+         }else{
+           return "1";
+         }
+       }).style("fill", function(d){
+         if(d.person == d1.person){
+           return "red";
+         }else{
+           return "gray";
+         }
+       });
+       console.log(d1);
+       // d.attr("r", 10).style("fill", "red");
+     });
 
     //
     //  //Det här fungerar ju inte
@@ -111,20 +127,20 @@ d3.json("data.json", function(data){
     //   }
     //  }).
      //the function that takes care of what happens on "brush" event
-   function brushed() {
-     var area = d3.event.selection;
-     var miny = area[0];
-     var maxy = area[1];
-     svg.selectAll(".line").style("stroke",function(d){
-       // console.log(d.getPointAtLength(0.1));
-       // console.log("d: " + d);
-       // console.log("miny: " + miny + " maxy: " + maxy);
-       if(yScale(d[0].y) >= miny && yScale(d[0].y) <= maxy){
-         return "red";
-       }else{
-         return "steel-blue";
-       }
-     });
+   // function brushed() {
+   //   var area = d3.event.selection;
+   //   var miny = area[0];
+   //   var maxy = area[1];
+   //   svg.selectAll(".line").style("stroke",function(d){
+   //     // console.log(d.getPointAtLength(0.1));
+   //     // console.log("d: " + d);
+   //     // console.log("miny: " + miny + " maxy: " + maxy);
+   //     if(yScale(d[0].y) >= miny && yScale(d[0].y) <= maxy){
+   //       return "red";
+   //     }else{
+   //       return "steel-blue";
+   //     }
+   //   });
 
-   }//brushed
+   // }//brushed
 });
