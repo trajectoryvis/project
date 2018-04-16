@@ -1,0 +1,5 @@
+d3 dispatch: coordinate views: https://bl.ocks.org/mbostock/5872848 with a shared state
+
+Custom events allows multiple listeners to be notified by an event
+
+Another example: http://bl.ocks.org/dukevis/6768900
