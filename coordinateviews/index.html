@@ -29,13 +29,13 @@
 
 
 		<!-- On small screens fills the full grid, on medium+ ones only half -->
-		<div class="col-xs-12 col-md-4">
+		<div class="col-xs-12 col-md-6"> <!--Changed from 4 and 8 to 6 and 6, as they, contrary to the example, should be of same size? -->
 			<h2>Trajectories</h2>
 			<div class="barChart" id="trajectories"></div>
 		</div>
 
 		<!-- On small screens fills the full grid, on medium+ ones only half -->
-		<div class="col-xs-12 col-md-8">
+		<div class="col-xs-12 col-md-6">
 			<h2>Overview</h2>
 			<div class="barChart" id="overview"></div>
 		</div>
@@ -52,15 +52,8 @@
 
 <script src="js/frameSeriesChart.js"></script>
 <script src="js/overviewChart.js"></script>
-<!-- <script src="js/main.js"></script>-->
-<script>
-var myoverviewChart = overviewChart();
-d3.json("data/data.json", function(data){
-	d3.select("#overview")
-		.datum(data)
-		.call(myoverviewChart);
-});
-</script>
+<script src="js/main.js"></script>
+
 
 <!-- JQuery + Bootstrap JS cdn -->
 <script
