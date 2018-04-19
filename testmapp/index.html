@@ -30,11 +30,15 @@ var groups = [
   "65 Years and Over"
 ];
 
-d3.csv("data.csv", type, function(error, states) {  //states as in US-states?
+d3.csv("data.csv", type, function(error, states) {  //states is an array of objects, each of which is a state with age-statistics
   if (error) throw error;
-  var stateById = d3.map();
-  states.forEach(function(d) { stateById.set(d.id, d); });
-  dispatch.call("load", this, stateById);
+  // console.log(states);
+  var stateById = d3.map();   //javascript map is same as haskell, it takes every element of array and does something eg. [1,2] -> map *2 -> [2,4]
+  states.forEach(function(d) {
+    stateById.set(d.id, d);
+    // console.log(d); //d is one of the objects; i.e. one state with all the data
+  });
+  dispatch.call("load", this, stateById); 
   dispatch.call("statechange", this, stateById.get("CA"));
 }); //d3.csv
 
