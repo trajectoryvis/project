@@ -22,20 +22,20 @@
 <div class="container-fluid">
 	<h1>UCY Trajectories</h1>
   <div class="row">
-		<div class="col-xs-12">
+		<div class="col-xs-12" id = "frames">
 			<h2>Frames</h2>
 			<div id="frameline"></div>
 		</div>
 
 
 		<!-- On small screens fills the full grid, on medium+ ones only half -->
-		<div class="col-xs-12 col-md-6"> <!--Changed from 4 and 8 to 6 and 6, as they, contrary to the example, should be of same size? -->
+		<div class="col-xs-12 col-md-6" id = "traj"> <!--Changed from 4 and 8 to 6 and 6, as they, contrary to the example, should be of same size? -->
 			<h2>Trajectories</h2>
 			<div class="barChart" id="trajectories"></div>
 		</div>
 
 		<!-- On small screens fills the full grid, on medium+ ones only half -->
-		<div class="col-xs-12 col-md-6">
+		<div class="col-xs-12 col-md-6" id = "over">
 			<h2>Overview</h2>
 			<div class="barChart" id="overview"></div>
 		</div>

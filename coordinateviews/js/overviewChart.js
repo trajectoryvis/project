@@ -32,7 +32,7 @@ function overviewChart(selection){
             pad = 20,
             left_pad = 20;
 
-        var svg = d3.select("#overview")
+        var svg = d3.select(this)
                     .append("svg")
                     .attr("width", w)
                     .attr("height", h);
