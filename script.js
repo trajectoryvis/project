@@ -93,14 +93,14 @@ d3.json("data.json", function(data){
      .attr("class", "circle")
      .attr("cx", function (d) { return xScale(d.x) })
      .attr("cy", function (d) { return yScale(d.y) })
-     .attr("r", 2)
+     .attr("r", 5)
      .style("fill",function(d) { return color(d.person);} )
      .on("click", function(d1){
        svg.selectAll("circle").attr("r", function(d){
          if(d.person == d1.person){
-           return "10";
+           return "5";
          }else{
-           return "1";
+           return "5";
          }
        }).style("fill", function(d){
          if(d.person == d1.person){

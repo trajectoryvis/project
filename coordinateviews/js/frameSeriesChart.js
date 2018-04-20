@@ -61,6 +61,7 @@ function frameSeriesChart(selection){
   };
   my.onbrushed = function(_) {
     // console.log("hej");
+    // console.log(!arguments.length);
     if (!arguments.length) return onbrushed;
     onbrushed = _;
     return my;

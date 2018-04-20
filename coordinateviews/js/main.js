@@ -21,11 +21,10 @@ d3.json("data/data.json", function(data){
 
   myslider.onbrushed(function(selected){
       // console.log(data);
-
       //TODO this is where we will select which trajectories to show
       var person1 = [];
-      var numberOfPeople = 1;
-
+      var numberOfPeople = Math.floor((Math.random() * 100) + 1);
+      console.log(numberOfPeople);
       for(i = 0; i < data.length; i++){
         if(data[i].person <= numberOfPeople-1 ){
           person1.push(data[i]);
@@ -41,13 +40,13 @@ d3.json("data/data.json", function(data){
 
   function update(){
     console.log("update");
-// -------Without these, it just adds new elements BUG
+// -------Without these, it just adds new elements BUG, not anymore I think, could be cleaned up
     // d3.select("#frameline").remove();
     // d3.select("#frames").append("div").attr("id", "frameline");
-    //
-    // d3.select("#trajectories").remove();
-    // d3.select("#traj").append("div").attr("id", "trajectories");
-    //
+
+    d3.select("#trajectories").remove();
+    d3.select("#traj").append("div").attr("id", "trajectories");
+
     // d3.select("#overview").remove();
     // d3.select("#over").append("div").attr("id", "overview");
     // myslider = frameSeriesChart();
@@ -58,14 +57,14 @@ d3.json("data/data.json", function(data){
     // d3.select(myslider.svg()).remove();
     // console.log(data);
 
-    d3.select("#frameline")
-      .datum(data)
-      .call(myslider);
+    // d3.select("#frameline")
+    //   .datum(data)
+    //   .call(myslider);
 
   //.datum(csData.people.all()) not sure why this would be better
-  	d3.select("#overview")
-  		.datum(data)
-  		.call(staticOverview);
+  	// d3.select("#overview")
+  	// 	.datum(data)
+  	// 	.call(staticOverview);
 
     d3.select("#trajectories")
       .datum(data1)
