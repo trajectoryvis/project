@@ -3,7 +3,12 @@
 // lets start with a line, if it looks too choppy, use a curve instead
 
 function overviewChart(selection){
-
+  var colours = ["#003399", "#006699", "#0000ff", "#009999", "#00ccff", "#666699", "#339966", "#6600cc", "#339933", "#00cc66", "#00ff99", "#66ccff", "#cc33ff", "#003300", "#66ff66", "#ff66ff", "#ff9999", "#ffff00", "#999966", "#666633", "#996633", "#cc3300", "#cc0066", "#ff1a1a"];
+  function colour(i){
+    i = i%colours.length;
+    // console.log(i);
+    return colours[i];
+  }
   function my(selection){
     selection.each(function(data){
 
@@ -74,17 +79,23 @@ function overviewChart(selection){
               tempperson.push(person1[j]);
             }
           }
+
           // console.log(person);
           svg.append("path")
             .datum(tempperson)
             .attr("class", "line")
+            .attr("id", "person" + i)
             .attr("fill", "none")
-            .attr("stroke", "steelblue")
+            // .attr("stroke", "steelblue")
+            .attr("stroke", function(tt){
+              return colour(i);
+            })
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            .attr("stroke-width", 1.5)
+            .attr("stroke-width", 3)
             .attr("d", line);
         }
+        // console.log(person1);  //remember, it logs everything twice since we have 2 graphs
 
         var info = d3.select(this).append("p").attr("id","infotext");
         // var dd = data.slice(0,100);
@@ -105,31 +116,40 @@ function overviewChart(selection){
            .on("mouseover", function(d1){
              // console.log(svg.selectAll("path
              var paths = svg.selectAll("path");
-             var currentpath = paths._groups[0][d1.person];
-             currentpath.setAttribute("stroke","red");
-             console.log(currentpath);
+             // var currentpath = paths._groups[0][d1.person];
+             // console.log(currentpath);
+             // currentpath.setAttribute("stroke", "red");
+             var thispath = svg.select("#person" + d1.person);
+             thispath.attr("stroke","red");
+             // thispath.attr("stroke", function(tt){
+             //   // console.log(d1.person);
+             //   return colour(d1.person);
+             // });
+             // console.log(currentpath);
              // console.log(d1.person)
              info.text("Person: " + d1.person);
-             svg.selectAll("circle").attr("r", function(d){
-               if(d.person == d1.person){
-                 return "10";
-               }else{
-                 return "10";
-               }
-             }).style("fill", function(d){
-               if(d.person == d1.person){
-                 return "red";
-               }else{
-                 return "gray";
-               }
-             });
+             // svg.selectAll("circle").attr("r", function(d){
+             //   if(d.person == d1.person){
+             //     return "10";
+             //   }else{
+             //     return "10";
+             //   }
+             // }).style("fill", function(d){
+             //   if(d.person == d1.person){
+             //     return "red";
+             //   }else{
+             //     return "gray";
+             //   }
+             // });
              // console.log(d1);
              // d.attr("r", 10).style("fill", "red");
            }).on("mouseout", function(d){
-             d3.selectAll("path").attr("stroke", "steelblue");
-           })
-
-           ;
+             for(i = 0; i < numberOfPeople; i++){
+               d3.select("#person" + i).attr("stroke",function(d){
+                 return colour(i);
+               });
+             }
+           });
 
           //
           //  //Det här fungerar ju inte
