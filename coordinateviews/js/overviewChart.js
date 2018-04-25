@@ -12,7 +12,7 @@ function overviewChart(selection){
       // d3.json("data/data.json", function(data){
 
         var person1 = [];
-        var numberOfPeople = 100;
+        var numberOfPeople = 200;
 
         for(i = 0; i < data.length; i++){
           if(data[i].person <= numberOfPeople-1 ){
@@ -86,7 +86,7 @@ function overviewChart(selection){
             .attr("d", line);
         }
 
-
+        var info = d3.select(this).append("p").attr("id","infotext");
         // var dd = data.slice(0,100);
         // console.log(data.length);
 
@@ -99,14 +99,22 @@ function overviewChart(selection){
            .attr("class", "circle")
            .attr("cx", function (d) { return xScale(d.x) })
            .attr("cy", function (d) { return yScale(d.y) })
-           .attr("r", 3)
+           .attr("r", 10)
+           .style("opacity", 0)
            .style("fill",function(d) { return color(d.person);} )
-           .on("click", function(d1){
+           .on("mouseover", function(d1){
+             // console.log(svg.selectAll("path
+             var paths = svg.selectAll("path");
+             var currentpath = paths._groups[0][d1.person];
+             currentpath.setAttribute("stroke","red");
+             console.log(currentpath);
+             // console.log(d1.person)
+             info.text("Person: " + d1.person);
              svg.selectAll("circle").attr("r", function(d){
                if(d.person == d1.person){
-                 return "3";
+                 return "10";
                }else{
-                 return "3";
+                 return "10";
                }
              }).style("fill", function(d){
                if(d.person == d1.person){
@@ -117,7 +125,11 @@ function overviewChart(selection){
              });
              // console.log(d1);
              // d.attr("r", 10).style("fill", "red");
-           });
+           }).on("mouseout", function(d){
+             d3.selectAll("path").attr("stroke", "steelblue");
+           })
+
+           ;
 
           //
           //  //Det här fungerar ju inte

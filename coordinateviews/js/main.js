@@ -20,18 +20,30 @@ d3.json("data/data.json", function(data){
   csData.people = csData.person.group();
 
   myslider.onbrushed(function(selected){
-      // console.log(data);
-      //TODO this is where we will select which trajectories to show
-      var person1 = [];
-      var numberOfPeople = Math.floor((Math.random() * 100) + 1);
-      console.log(numberOfPeople);
-      for(i = 0; i < data.length; i++){
-        if(data[i].person <= numberOfPeople-1 ){
-          person1.push(data[i]);
-        }
-      }
-      data1 = person1;
-      // console.log(person1);
+       var mini = selected[0];
+       var maxi = selected[1];
+
+       var nydata = [];
+
+       for(i = 0; i < data.length; i++){
+         if(data[i].frame >= mini && data[i].frame <= maxi ){
+           nydata.push(data[i]);
+         }
+       }
+
+
+      // //TODO this is where we will select which trajectories to show
+      // var person1 = [];
+      // var numberOfPeople = 2;
+      // // var numberOfPeople = Math.floor((Math.random() * 100) + 1);
+      // for(i = 0; i < data.length; i++){
+      //   if(data[i].person <= numberOfPeople-1 ){
+      //     person1.push(data[i]);
+      //   }
+      // }
+      // data1 = person1;
+      // console.log(person1.frames);
+      data1 = nydata;
       update();
   });
 
