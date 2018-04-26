@@ -11,3 +11,6 @@ heatmap (grip approach) to see usage of space
 bugg: trajectories resizar när trajectories når eller inte når en kant
 
 För färg: gör en lista och spara varje persons färg där i stället
+
+För transparency: http://bl.ocks.org/bycoffe/18441cddeb8fe147b719fab5e30b5d45 dela upp pathen i delar och sätt transparency beroende på
+vilken koordinat som har minst frame

@@ -92,7 +92,7 @@ function overviewChart(selection){
             })
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 2)
             .attr("d", line);
         }
         // console.log(person1);  //remember, it logs everything twice since we have 2 graphs
