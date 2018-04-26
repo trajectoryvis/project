@@ -57,16 +57,16 @@ function overviewChart(selection){
           .y(function(d){return yScale(d.y);});
 
 
-        // svg.append("g")
-        //    .attr("class", "axis")
-        //    .attr("transform", "translate(0, "+(h-pad)+")")
-        //    .call(xAxis);
-        //
-        // svg.append("g")
-        //    .attr("class", "axis")
-        //    .attr("transform", "translate("+(left_pad-pad)+", 0)")
-        //    .call(yAxis);
-        //
+        svg.append("g")
+           .attr("class", "axis")
+           .attr("transform", "translate(0, "+(h-pad)+")")
+           .call(xAxis);
+
+        svg.append("g")
+           .attr("class", "axis")
+           .attr("transform", "translate("+(left_pad-pad)+", 0)")
+           .call(yAxis);
+        
         // svg.append("g")
         //     .attr("class", "brush")
         //     .call(d3.brushY()
