@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-	private static String inputpath = "/Users/christinasonebo/Desktop/project/points_no_text.txt";
+	private static String inputpath = "/Users/joele/Desktop/data_university_students/students001.vsp";
 
 	public static void main(String[] args) throws IOException{
 		InputStream in = new FileInputStream(inputpath);
