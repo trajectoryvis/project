@@ -20,7 +20,7 @@ public class Reader {
 		scanner.useDelimiter("\n");
 		System.out.println("Number of splines/people: " + scanner.next()); //the first line, number of splines/persons
 
-		FileWriter writer = new FileWriter("/Users/joele/Desktop/data_university_students/file.json");
+		FileWriter writer = new FileWriter("C:/Users/joele/Documents/Skola/kex/project/outputreal.txt");
 		PrintWriter printer = new PrintWriter(writer);
 		while(scanner.hasNext()){
 			int controlpoints = Integer.parseInt(scanner.next().replaceAll("\\p{C}", ""));	//apparently there are some unprintable hidden characters in the text causing errors, replace them with nothing
