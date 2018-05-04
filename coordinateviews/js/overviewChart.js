@@ -3,7 +3,7 @@
 // lets start with a line, if it looks too choppy, use a curve instead
 
 function overviewChart(selection){
-  var colours = ["#003399", "#006699", "#0000ff", "#009999", "#00ccff", "#666699", "#339966", "#6600cc", "#339933", "#00cc66", "#00ff99", "#66ccff", "#cc33ff", "#003300", "#66ff66", "#ff66ff", "#ff9999", "#ffff00", "#999966", "#666633", "#996633", "#cc3300", "#cc0066", "#ff1a1a"];
+  var colours = ["#e6194b	", "#3cb44b", "#ffe119", "#0082c8", "#f58231", "#911eb4", "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#008080", "#e6beff", "#aa6e28", "#fffac8", "#800000", "#aaffc3", "#808000", "#ffd8b1", "#000080", "#808080"];
   function colour(i){
     i = i%colours.length;
     // console.log(i);
@@ -66,7 +66,7 @@ function overviewChart(selection){
            .attr("class", "axis")
            .attr("transform", "translate("+(left_pad-pad)+", 0)")
            .call(yAxis);
-        
+
         // svg.append("g")
         //     .attr("class", "brush")
         //     .call(d3.brushY()
@@ -112,22 +112,22 @@ function overviewChart(selection){
            .attr("cy", function (d) { return yScale(d.y) })
            .attr("r", 10)
            .style("opacity", 0)
-           .style("fill",function(d) { return color(d.person);} )
-           .on("mouseover", function(d1){
-             // console.log(svg.selectAll("path
-             var paths = svg.selectAll("path");
-             // var currentpath = paths._groups[0][d1.person];
-             // console.log(currentpath);
-             // currentpath.setAttribute("stroke", "red");
-             var thispath = svg.select("#person" + d1.person);
-             thispath.attr("stroke","red");
+           .style("fill",function(d) { return color(d.person);} );
+           // .on("mouseover", function(d1){
+           //   // console.log(svg.selectAll("path
+           //   var paths = svg.selectAll("path");
+           //   // var currentpath = paths._groups[0][d1.person];
+           //   // console.log(currentpath);
+           //   // currentpath.setAttribute("stroke", "red");
+           //   var thispath = svg.select("#person" + d1.person);
+           //   thispath.attr("stroke","red");
              // thispath.attr("stroke", function(tt){
              //   // console.log(d1.person);
              //   return colour(d1.person);
              // });
              // console.log(currentpath);
              // console.log(d1.person)
-             info.text("Person: " + d1.person);
+             // info.text("Person: " + d1.person);
              // svg.selectAll("circle").attr("r", function(d){
              //   if(d.person == d1.person){
              //     return "10";
@@ -143,13 +143,13 @@ function overviewChart(selection){
              // });
              // console.log(d1);
              // d.attr("r", 10).style("fill", "red");
-           }).on("mouseout", function(d){
-             for(i = 0; i < numberOfPeople; i++){
-               d3.select("#person" + i).attr("stroke",function(d){
-                 return colour(i);
-               });
-             }
-           });
+           // }).on("mouseout", function(d){
+           //   // for(i = 0; i < numberOfPeople; i++){
+           //   //   d3.select("#person" + i).attr("stroke",function(d){
+           //   //     return colour(i);
+           //   //   });
+           //   // }
+           // });
 
           //
           //  //Det här fungerar ju inte

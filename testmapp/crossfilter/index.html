@@ -11,75 +11,47 @@
   <script src="//d3js.org/d3.v4.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
   <script>
-  var data = [
-  {date: "2011-11-14T16:17:54Z", quantity: 2, total: 190, tip: 100, type: "tab"},
-  {date: "2011-11-14T16:20:19Z", quantity: 2, total: 190, tip: 100, type: "tab"},
-  {date: "2011-11-14T16:28:54Z", quantity: 1, total: 300, tip: 200, type: "visa"},
-  {date: "2011-11-14T16:30:43Z", quantity: 2, total: 90, tip: 0, type: "tab"},
-  {date: "2011-11-14T16:48:46Z", quantity: 2, total: 90, tip: 0, type: "tab"},
-  {date: "2011-11-14T16:53:41Z", quantity: 2, total: 90, tip: 0, type: "tab"},
-  {date: "2011-11-14T16:54:06Z", quantity: 1, total: 100, tip: 0, type: "cash"},
-  {date: "2011-11-14T16:58:03Z", quantity: 2, total: 90, tip: 0, type: "tab"},
-  {date: "2011-11-14T17:07:21Z", quantity: 2, total: 90, tip: 0, type: "tab"},
-  {date: "2011-11-14T17:22:59Z", quantity: 2, total: 90, tip: 0, type: "tab"},
-  {date: "2011-11-14T17:25:45Z", quantity: 2, total: 200, tip: 0, type: "cash"},
-  {date: "2011-11-14T17:29:52Z", quantity: 1, total: 200, tip: 100, type: "visa"}
-];
+  var data =
+    [
+    { "person":0, "x":174.0, "y":-131.0, "frame":0},
+    { "person":0, "x":116.0, "y":-139.0, "frame":27},
+    { "person":0, "x":35.0, "y":-148.0, "frame":65},
+    { "person":0, "x":-32.0, "y":-158.0, "frame":100},
+    { "person":0, "x":-112.0, "y":-169.0, "frame":140},
+    { "person":0, "x":-199.0, "y":-177.0, "frame":184},
+    { "person":0, "x":-264.0, "y":-191.0, "frame":223},
+    { "person":0, "x":-329.0, "y":-227.0, "frame":263},
+    { "person":0, "x":-360.0, "y":-252.0, "frame":284},
+    { "person":1, "x":183.0, "y":-153.0, "frame":0},
+    { "person":1, "x":96.0, "y":-164.0, "frame":39},
+    { "person":1, "x":-9.0, "y":-179.0, "frame":89},
+    { "person":1, "x":-119.0, "y":-201.0, "frame":140},
+    { "person":1, "x":-227.0, "y":-227.0, "frame":190},
+    { "person":1, "x":-309.0, "y":-242.0, "frame":235},
+    { "person":1, "x":-363.0, "y":-256.0, "frame":259},
+    { "person":2, "x":185.0, "y":-174.0, "frame":0},
+    { "person":2, "x":91.0, "y":-187.0, "frame":42},
+    { "person":2, "x":-27.0, "y":-208.0, "frame":95},
+    { "person":2, "x":-140.0, "y":-240.0, "frame":149},
+    { "person":2, "x":-259.0, "y":-269.0, "frame":202},
+    { "person":2, "x":-342.0, "y":-287.0, "frame":236}
+  ];
 
   //Understanding crossfilter:
 
   var cross = crossfilter(data);
   d3.select("div").append("p").text("Cross.size() = data.length: " + cross.size());
-  var datatotal = cross.dimension(function(d){return d.total;});
-  // console.log(cross.top(100)); Detta fungerar ej,
-  // console.log(datatotal.top(100)); Detta fungerar dock, och ger en array med alla object (date: quant.: etc)
-  //Arrayen är också sorterad på den dimension som valts; så sorterad på total eller quantity eller liknande. En dimension måste gå att sortera, och alltså
-  //vara en primitv typ eller så får man overrida valueOf. ????!!!! Möjligtvis är den inte initialt sorterad, men när man kallar på top() för att få ut en Array
-  //så blir den sorterad
-  var datatype = cross.dimension(function(d){return d.type;});
-  // var datatypearray = datatype.top(cross.size()); //get all data as an array, sorted by the dimension
-  // for(i = 0; i < datatypearray.length; i++){
-  //   d3.select("div").append("p").text("Objects, sorted by datatype: " + datatypearray[i].date + " " + datatypearray[i].total + " " + datatypearray[i].type);
-  // }
-  // datatotal.filter(90);
-  // var datatotalarray = datatotal.filter(90).top(cross.size());
 
-  // //it seems that the filter is persistent, even if saved to another variable, like var x = datatotal.filter(90) datatotal is now filtered
+  var dimPerson = cross.dimension(function(d){return d.person});
+  var dimFrame = cross.dimension(function(d){return d.frame});
 
-  // var datatotalarray = datatotal.filter().top(cross.size());
+  var allpeople = dimFrame.filterAll().bottom(Infinity);
 
-  //however, you can "refilter" it by using another filter (or like here, no filter at all which brings everything back)
-
-  //filter and filterExact seems to work the same for ints, maybe different for strings?
-  //filterRange takes a range and returns >[0] and <[1], THIS IS THE ONE WE WILL USE
-  // var datatotalarray = datatotal.filterRange([0,120]).top(cross.size());
-
-  //you can also filter on a function:
-  // var datatotalarray = datatotal.filterFunction(function(d){return d > 90}).top(Infinity); //can top(Infinity) instead of any one size, will return all objects that are filtered
-  var datatotalarray = datatotal.filterAll().bottom(Infinity); //removes all filters, returns all the original data //bottom will sort in ascending order, top in descending
-
-  for(i = 0; i < datatotalarray.length; i++){
-    d3.select("div").append("p").text("Objects, sorted by total: " + datatotalarray[i].date + " " + datatotalarray[i].total + " " + datatotalarray[i].type);
+  for(i = 0; i < allpeople.length; i++){
+    d3.select("div").append("p").text("Objects, sorted by person: Person: " + allpeople[i].person + " X: " + allpeople[i].x + " Y: " + allpeople[i].y + " Frame: " + allpeople[i].frame);
   }
 
-  
 
-
-
-
-
-
-
-
-  // var colours = ["#ff9999", "#66ff66", "#6600ff", "#000099"];  We can have as many colours as we want, 20 for example
-  // d3.select("div").append("svg").attr("width",100).attr("height",100).append("circle").attr("r",30).style("fill",function(d){return colour(0)});
-  // //colour function the same d.person will always return the same colour.
-  // function colour(i){
-  //   console.log(i);
-  //   i = i%4;
-  //   console.log(i);
-  //   return colours[i];
-  // }
 
   </script>
 </html>
