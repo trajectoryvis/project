@@ -19,3 +19,26 @@ BUGG: den ena overviewChart har en fungerane mouseout som återställer färger,
 
 Kan använda : http://learnjsdata.com/group_data.html d3.nest som crossfilter för att gruppera data
 Detta kan vara bra när vi gör paths i stället för att gå igenom all kod.
+
+
+election.call(function[, arguments…]) <>
+
+Invokes the specified function exactly once, passing in this selection along with any optional arguments. Returns this selection. This is equivalent to invoking the function by hand but facilitates method chaining. For example, to set several styles in a reusable function:
+
+function name(selection, first, last) {
+  selection
+      .attr("first-name", first)
+      .attr("last-name", last);
+}
+
+Now say:
+
+d3.selectAll("div").call(name, "John", "Snow");
+
+This is roughly equivalent to:
+
+name(d3.selectAll("div"), "John", "Snow");
+
+The only difference is that selection.call always returns the selection and not the return value of the called function, name.
+
+https://github.com/d3/d3-selection/blob/master/README.md#selection_filter

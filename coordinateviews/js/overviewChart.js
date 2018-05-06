@@ -1,23 +1,23 @@
+function overviewChart(selection,data){
 
-//notes:
-// lets start with a line, if it looks too choppy, use a curve instead
-
-function overviewChart(selection){
+  //carefully selected 20 colours
   var colours = ["#e6194b	", "#3cb44b", "#ffe119", "#0082c8", "#f58231", "#911eb4", "#46f0f0", "#f032e6", "#d2f53c", "#fabebe", "#008080", "#e6beff", "#aa6e28", "#fffac8", "#800000", "#aaffc3", "#808000", "#ffd8b1", "#000080", "#808080"];
+
+  //deterministically assigns a colour to a person(id-number)
   function colour(i){
     i = i%colours.length;
-    // console.log(i);
     return colours[i];
   }
-  function my(selection){
-    selection.each(function(data){
+
+  function my(selection,data){
+    selection.each(function(d){
 
       var newData = [];
 
       // d3.json("data/data.json", function(data){
 
         var person1 = [];
-        var numberOfPeople = 200;
+        var numberOfPeople = 50;
 
         for(i = 0; i < data.length; i++){
           if(data[i].person <= numberOfPeople-1 ){
@@ -112,19 +112,24 @@ function overviewChart(selection){
            .attr("cy", function (d) { return yScale(d.y) })
            .attr("r", 10)
            .style("opacity", 0)
-           .style("fill",function(d) { return color(d.person);} );
-           // .on("mouseover", function(d1){
+           .style("fill",function(d) { return color(d.person);})
+           .on("mouseover", function(d1){
            //   // console.log(svg.selectAll("path
-           //   var paths = svg.selectAll("path");
-           //   // var currentpath = paths._groups[0][d1.person];
-           //   // console.log(currentpath);
-           //   // currentpath.setAttribute("stroke", "red");
+             var paths = svg.selectAll("path");
+             var currentpath = paths._groups[0][d1.person];
+             for(i = 0; i < numberOfPeople; i++){
+               d3.select("#person" + i).attr("opacity",function(d){
+                 return "0.1";
+               });
+             }
+             currentpath.setAttribute("opacity", "1");
+             // currentpath.setAttribute("stroke-width", 4);
            //   var thispath = svg.select("#person" + d1.person);
            //   thispath.attr("stroke","red");
              // thispath.attr("stroke", function(tt){
              //   // console.log(d1.person);
              //   return colour(d1.person);
-             // });
+             });
              // console.log(currentpath);
              // console.log(d1.person)
              // info.text("Person: " + d1.person);
@@ -144,10 +149,10 @@ function overviewChart(selection){
              // console.log(d1);
              // d.attr("r", 10).style("fill", "red");
            // }).on("mouseout", function(d){
-           //   // for(i = 0; i < numberOfPeople; i++){
-           //   //   d3.select("#person" + i).attr("stroke",function(d){
-           //   //     return colour(i);
-           //   //   });
+             // for(i = 0; i < numberOfPeople; i++){
+             //   d3.select("#person" + i).attr("stroke",function(d){
+             //     return colour(i);
+             //   });
            //   // }
            // });
 
