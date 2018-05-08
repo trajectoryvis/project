@@ -42,3 +42,10 @@ name(d3.selectAll("div"), "John", "Snow");
 The only difference is that selection.call always returns the selection and not the return value of the called function, name.
 
 https://github.com/d3/d3-selection/blob/master/README.md#selection_filter
+
+
+
+
+GRADIENT::
+https://www.visualcinnamon.com/2016/05/smooth-color-legend-d3-svg-gradient
+https://bl.ocks.org/mbostock/4163057

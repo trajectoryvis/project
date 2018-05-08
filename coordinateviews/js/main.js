@@ -6,7 +6,7 @@ d3.json("data/data.json", function(d){
 
 function doSomething(jsondata){
   realdata = jsondata;
-  //TODO: nested function, reading both data, since the rest of the script is run otherwise.
+  //nested function, reading both data, since the rest of the script is run otherwise.
   var simdata;
   var realtrajectories = overviewChart();
   var myslider = frameSeriesChart();
@@ -20,10 +20,10 @@ function doSomething(jsondata){
       .datum(realdata)
       .call(myslider);
 
-  //create simulated trajectories
-    d3.select("#simtraj")
-      .datum(simdata)
-      .call(simtrajectories);
+  // //create simulated trajectories
+  //   d3.select("#simtraj")
+  //     .datum(simdata)
+  //     .call(simtrajectories);
 
   //create real trajectories
     d3.select("#realtraj")
@@ -59,20 +59,20 @@ function doSomething(jsondata){
 //---------------------
 
   function update(newrealdata,newsimdata){
-    console.log("update");
+    // console.log("update");
 
 
     //In search for a better way (crossfilter?) I remove the entire div and then just remake it
     d3.select("#realtraj").remove();
     d3.select("#rtraj").append("div").attr("id", "realtraj");
 
-    d3.select("#simtraj").remove();
-    d3.select("#straj").append("div").attr("id", "simtraj");
+    // d3.select("#simtraj").remove();
+    // d3.select("#straj").append("div").attr("id", "simtraj");
 
-    //create simulated trajectories
-    d3.select("#simtraj")
-      .datum(newsimdata)
-      .call(simtrajectories);
+    // // create simulated trajectories
+    // d3.select("#simtraj")
+    //   .datum(newsimdata)
+    //   .call(simtrajectories);
 
     //create real trajectories
     d3.select("#realtraj")

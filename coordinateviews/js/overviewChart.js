@@ -10,11 +10,10 @@ function overviewChart(selection){
   }
 
   function my(selection){
-
     selection.each(function(data){
 
       var smalldata = []; //only used for testing with fewer people
-      var numberOfPeople = 3;
+      var numberOfPeople = 50;
 
       for(i = 0; i < data.length; i++){
         if(data[i].person <= numberOfPeople-1 ){
@@ -43,23 +42,23 @@ function overviewChart(selection){
       var xScale = d3.scaleLinear().domain([xMin,xMax]).range([left_pad, w-pad]),
           yScale = d3.scaleLinear().domain([yMax,yMin]).range([pad, h-pad*2]);
 
-      var xAxis = d3.axisBottom(xScale),
-          yAxis = d3.axisLeft(yScale);
+      // var xAxis = d3.axisBottom(xScale),
+      //     yAxis = d3.axisLeft(yScale);
 
       var line = d3.line()
         .x(function(d){return xScale(d.x);})
         .y(function(d){return yScale(d.y);});
 
 
-      svg.append("g")
-         .attr("class", "axis")
-         .attr("transform", "translate(0, "+(h-pad)+")")
-         .call(xAxis);
-
-      svg.append("g")
-         .attr("class", "axis")
-         .attr("transform", "translate("+(left_pad-pad)+", 0)")
-         .call(yAxis);
+      // svg.append("g")
+      //    .attr("class", "axis")
+      //    .attr("transform", "translate(0, "+(h-pad)+")")
+      //    .call(xAxis);
+      //
+      // svg.append("g")
+      //    .attr("class", "axis")
+      //    .attr("transform", "translate("+(left_pad-pad)+", 0)")
+      //    .call(yAxis);
 
 
       for(i = 0; i < numberOfPeople; i++){
@@ -82,9 +81,10 @@ function overviewChart(selection){
               //0 = röd, 1 = grön, 2 = gul
               return colour(i);
             })
+            .attr("opacity",0)
             .attr("stroke-linejoin", "round")
             .attr("stroke-linecap", "round")
-            .attr("stroke-width", 2)
+            .attr("stroke-width", 3)
             .attr("d", line); //can also be curve etc?
         }//path-creating loop, could be done better?
 
@@ -93,21 +93,88 @@ function overviewChart(selection){
         // var dd = data.slice(0,100);
         // console.log(data.length);
 
-        //TODO
-        svg.selectAll("path")
-           .on("mouseover", function(d1){
-             console.log(d1);
-             console.log("d1person: " + d1.person);
-             var paths = svg.selectAll("path");
-             var currentpath = paths._groups[0][d1.person+2];
-             //The error comes from selecAll("path") selecting the axis as well
-             for(i = 0; i < numberOfPeople; i++){
-               d3.select("#person" + i).attr("opacity",function(d){
-                 return "0.1";
-               });
-             }
-             currentpath.setAttribute("opacity", "1");
+
+
+          // svg.append("circle").attr("cx",0).attr("cy",0).style("fill","red");
+          var lastpoints = [];
+
+          svg.selectAll("path").each(function(d){
+            var lastpoint = d[d.length-1];
+            // console.log("d");
+            // console.log(d);
+            if(lastpoint != undefined){
+              lastpoints.push(lastpoint);
+            }
+          });
+
+          svg.selectAll("path").each(function(d){
+            var increment = 1/d.length;
+            var opc = 0;
+            for(i = 1; i < d.length; i++){
+              var temppath = [];
+              temppath.push(d[i-1]);
+              temppath.push(d[i]);
+
+              svg.append("path")
+              .datum(temppath)
+              .attr("class", "line")
+              .attr("id", "person" + d[i].person)
+              .attr("fill", "none")
+              .attr("stroke", function(){
+                return colour(d[i].person);
+              })
+              .attr("opacity",opc)
+              .attr("stroke-linejoin", "round")
+              .attr("stroke-linecap", "round")
+              .attr("stroke-width", 3)
+              .attr("d", line); //can also be curve etc?
+              opc = opc + increment;
+            }
+
+          });
+
+          if(lastpoints.length > 0){
+          // console.log("lastpoints");
+          // console.log(lastpoints);
+          // console.log("---");
+
+          svg.selectAll("circle")
+             .data(lastpoints)
+             .enter()
+             .append("circle")
+             .attr("class", "circle")
+             .attr("cx", function (d) { return xScale(d.x) })
+             .attr("cy", function (d) { return yScale(d.y) })
+             .attr("r", 5)
+             .style("opacity", 1)
+             .style("fill", function(d){
+               return(colour(d.person));
              });
+           }
+
+
+           //TODO
+           svg.selectAll("path")
+             .on("mouseover",function(d){
+               console.log("hi");
+
+             });//selectAll path mouseover
+
+
+        // svg.selectAll("path")
+        //    .on("mouseover", function(d1){
+        //      console.log(d1);
+        //      console.log("d1person: " + d1.person);
+        //      var paths = svg.selectAll("path");
+        //      var currentpath = paths._groups[0][d1.person+2];
+        //      //The error comes from selecAll("path") selecting the axis as well
+        //      for(i = 0; i < numberOfPeople; i++){
+        //        d3.select("#person" + i).attr("opacity",function(d){
+        //          return "0.1";
+        //        });
+        //      }
+        //      currentpath.setAttribute("opacity", "1");
+        //      });
 
 
         // //TODO remove
@@ -134,16 +201,21 @@ function overviewChart(selection){
         //        });
         //      }
         //      currentpath.setAttribute("opacity", "1");
-        //    }).on("mouseout", function(d){
+        //    })
+        //    .on("mouseout", function(d){
         //      for(i = 0; i < numberOfPeople; i++){
         //        d3.select("#person" + i).attr("opacity",function(d){
         //          return 1;
         //        });
         //      }
         //    });
+         });//selection.each
 
 
-      })//selection.each
-    return my;
   }//my
+
+
+
+
+  return my;
 }//overviewChart
