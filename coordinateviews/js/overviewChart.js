@@ -13,14 +13,25 @@ function overviewChart(selection){
     selection.each(function(data){
 
       var smalldata = []; //only used for testing with fewer people
-      var numberOfPeople = 50;
+      var numberOfPeople = 1000;
+      var intext = d3.select("#realheader").text();
+      var intextarray = intext.split(" ");
+      var actualtrajectories = parseInt(intextarray[1]);
+      console.log(actualtrajectories);
+      d3.select("#realheader").text("Visualising " + Math.min(numberOfPeople,actualtrajectories) + " real trajectories"); //shows the amount of trajectories
 
+      var displayedtrajectories = 0;
+      var oldperson = -1;
       for(i = 0; i < data.length; i++){
         if(data[i].person <= numberOfPeople-1 ){
           smalldata.push(data[i]);
+          if(data[i].person != oldperson){
+            displayedtrajectories ++;
+            oldperson = data[i].person;
+          }
         }
       }
-
+      d3.select("#displayedtrajectories").text("showing " + displayedtrajectories + " trajectories at the moment");
       //TODO this is why the window resizes with xscale and yscale changing
       var xMin = d3.min(data, function(d){return d.x}), //max and min
           xMax = d3.max(data, function(d){return d.x}),

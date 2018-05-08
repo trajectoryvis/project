@@ -15,6 +15,10 @@ function doSomething(jsondata){
   d3.json("data/datasim.json", function(datasim){
   simdata = datasim;
 
+  var numpeople = d3.max(jsondata,function(d){
+    return d.person;
+  }) + 1;
+  d3.select("#realheader").text("Showing " + numpeople + " real trajectories");
   //create slider
     d3.select("#frameline")
       .datum(realdata)
