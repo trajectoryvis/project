@@ -11,13 +11,12 @@ function overviewChart(selection){
 
   function my(selection){
     selection.each(function(data){
-
+      console.log(selection);
       var smalldata = []; //only used for testing with fewer people
-      var numberOfPeople = 1000;
+      var numberOfPeople = 10;
       var intext = d3.select("#realheader").text();
       var intextarray = intext.split(" ");
       var actualtrajectories = parseInt(intextarray[1]);
-      console.log(actualtrajectories);
       d3.select("#realheader").text("Visualising " + Math.min(numberOfPeople,actualtrajectories) + " real trajectories"); //shows the amount of trajectories
 
       var displayedtrajectories = 0;
@@ -99,7 +98,7 @@ function overviewChart(selection){
             .attr("d", line); //can also be curve etc?
         }//path-creating loop, could be done better?
 
-
+        // TODO
         var info = d3.select(this).append("p").attr("id","infotext").text("Details-On-Demand");
         // var dd = data.slice(0,100);
         // console.log(data.length);
@@ -119,10 +118,17 @@ function overviewChart(selection){
           });
 
           svg.selectAll("path").each(function(d){
-            var increment = 1/d.length;
+            var increment = 1/(d.length);
             var opc = 0;
             for(i = 1; i < d.length; i++){
               var temppath = [];
+              // var x1 = d[i-1];
+              // var x2 = d[i];
+              // var difference = Math.abs(x1.x - x2.x);
+              // for(j = Math.min(x1.x,x2.x); j < Math.max(x1.x,x2.x); j = j+difference){
+              //
+              // }
+              // console.log(difference);
               temppath.push(d[i-1]);
               temppath.push(d[i]);
 
@@ -172,54 +178,6 @@ function overviewChart(selection){
              });//selectAll path mouseover
 
 
-        // svg.selectAll("path")
-        //    .on("mouseover", function(d1){
-        //      console.log(d1);
-        //      console.log("d1person: " + d1.person);
-        //      var paths = svg.selectAll("path");
-        //      var currentpath = paths._groups[0][d1.person+2];
-        //      //The error comes from selecAll("path") selecting the axis as well
-        //      for(i = 0; i < numberOfPeople; i++){
-        //        d3.select("#person" + i).attr("opacity",function(d){
-        //          return "0.1";
-        //        });
-        //      }
-        //      currentpath.setAttribute("opacity", "1");
-        //      });
-
-
-        // //TODO remove
-        // svg.selectAll("circle")
-        //    .data(smalldata)
-        //    .enter()
-        //    .append("circle")
-        //    .attr("class", "circle")
-        //    .attr("cx", function (d) { return xScale(d.x) })
-        //    .attr("cy", function (d) { return yScale(d.y) })
-        //    .attr("r", 10)
-        //    .style("opacity", 0)
-        //    .style("fill",function(d) {
-        //      // console.log(d.person);
-        //      return colour(d.person);})
-        //    .on("mouseover", function(d1){
-        //      console.log("d1person: " + d1.person);
-        //      var paths = svg.selectAll("path");
-        //      var currentpath = paths._groups[0][d1.person+2];
-        //      //The error comes from selecAll("path") selecting the axis as well
-        //      for(i = 0; i < numberOfPeople; i++){
-        //        d3.select("#person" + i).attr("opacity",function(d){
-        //          return "0.1";
-        //        });
-        //      }
-        //      currentpath.setAttribute("opacity", "1");
-        //    })
-        //    .on("mouseout", function(d){
-        //      for(i = 0; i < numberOfPeople; i++){
-        //        d3.select("#person" + i).attr("opacity",function(d){
-        //          return 1;
-        //        });
-        //      }
-        //    });
          });//selection.each
 
 

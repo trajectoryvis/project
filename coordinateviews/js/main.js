@@ -24,10 +24,10 @@ function doSomething(jsondata){
       .datum(realdata)
       .call(myslider);
 
-  // //create simulated trajectories
-  //   d3.select("#simtraj")
-  //     .datum(simdata)
-  //     .call(simtrajectories);
+  //create simulated trajectories
+    // d3.select("#simtraj")
+    //   .datum(simdata)
+    //   .call(simtrajectories);
 
   //create real trajectories
     d3.select("#realtraj")
@@ -73,7 +73,7 @@ function doSomething(jsondata){
     // d3.select("#simtraj").remove();
     // d3.select("#straj").append("div").attr("id", "simtraj");
 
-    // // create simulated trajectories
+    // create simulated trajectories
     // d3.select("#simtraj")
     //   .datum(newsimdata)
     //   .call(simtrajectories);
