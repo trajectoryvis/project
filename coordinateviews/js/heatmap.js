@@ -1,4 +1,4 @@
-function easyscript(selection){
+function heatmap(selection){
 
   var xpartitions = 100;
   var ypartitions = 100;

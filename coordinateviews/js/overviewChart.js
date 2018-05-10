@@ -11,16 +11,18 @@ function overviewChart(selection){
 
   function my(selection){
     selection.each(function(data){
-      console.log(selection);
       var smalldata = []; //only used for testing with fewer people
-      var numberOfPeople = 10;
+      var numberOfPeople = 20;
       var intext = d3.select("#realheader").text();
       var intextarray = intext.split(" ");
       var actualtrajectories = parseInt(intextarray[1]);
       d3.select("#realheader").text("Visualising " + Math.min(numberOfPeople,actualtrajectories) + " real trajectories"); //shows the amount of trajectories
 
+
+
       var displayedtrajectories = 0;
       var oldperson = -1;
+      // console.log(data.length);
       for(i = 0; i < data.length; i++){
         if(data[i].person <= numberOfPeople-1 ){
           smalldata.push(data[i]);
@@ -99,7 +101,7 @@ function overviewChart(selection){
         }//path-creating loop, could be done better?
 
         // TODO
-        var info = d3.select(this).append("p").attr("id","infotext").text("Details-On-Demand");
+        // var info = d3.select(this).append("p").attr("id","infotext").text("Details-On-Demand");
         // var dd = data.slice(0,100);
         // console.log(data.length);
 
@@ -173,7 +175,7 @@ function overviewChart(selection){
            //TODO
            svg.selectAll("path")
              .on("mouseover",function(d){
-               console.log("hi");
+               // console.log("hi");
 
              });//selectAll path mouseover
 

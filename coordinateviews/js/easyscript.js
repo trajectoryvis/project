@@ -6,7 +6,7 @@ function easyscript(selection){
   // var maxcount = 10;
   var margin = { top: 50, right: 0, bottom: 100, left: 30 },
       width = 960 - margin.left - margin.right,
-      height = 430 - margin.top - margin.bottom,
+      height = 430 - margin.top - margin.bottom + 35,
       gridSizeX = Math.floor(width / xpartitions),
       gridSizeY = Math.floor(width / ypartitions),
       legendElementWidth = gridSizeX*2,
@@ -17,6 +17,18 @@ function easyscript(selection){
     //selection is going to be whatever div we have chosen in main
     selection.each(function(data){
 
+    var smalldata = []; //only used for testing with fewer people
+    var numberOfPeople = 400;
+    var oldperson = -1;
+    // console.log(data.length);
+    for(i = 0; i < data.length; i++){
+      if(data[i].person <= numberOfPeople-1 ){
+        smalldata.push(data[i]);
+        if(data[i].person != oldperson){
+          oldperson = data[i].person;
+        }
+      }
+    }
     var xMin = d3.min(data, function(d){return d.x}),
         xMax = d3.max(data, function(d){return d.x}),
         yMin = d3.min(data, function(d){return d.y}),
@@ -60,15 +72,15 @@ function easyscript(selection){
           .attr("class", "c0")
           .attr("width", gridSizeX)
           .attr("height", gridSizeY)
-          .style("shape-rendering", "crispEdges") //otherwise there are sometimes lines due to anti-aliasing
+          .style("shape-rendering", "optimizeSpeed") //otherwise there are sometimes lines due to anti-aliasing
           .style("fill", "white");
           // .style("fill", function(){return colorScale(4)});
       }//j
     }//i
 
-    for(i = 0; i < data.length; i++){
-      var x = xScale(data[i].x);
-      var y = yScale(data[i].y);
+    for(i = 0; i < smalldata.length; i++){
+      var x = xScale(smalldata[i].x);
+      var y = yScale(smalldata[i].y);
       var elem = document.elementFromPoint(x,y);
       var selectedelem = d3.select(elem);
       var count = 0;
@@ -90,9 +102,9 @@ function easyscript(selection){
       // sle.style("fill","red");
     }//counting
 
-    for(i = 0; i < data.length; i++){
-      var x = xScale(data[i].x);
-      var y = yScale(data[i].y);
+    for(i = 0; i < smalldata.length; i++){
+      var x = xScale(smalldata[i].x);
+      var y = yScale(smalldata[i].y);
       var elem = document.elementFromPoint(x,y);
       var selectedelem = d3.select(elem);
       var count = 0;
@@ -107,27 +119,45 @@ function easyscript(selection){
       // sle.style("fill","red");
     }//counting
 
-    //
-    // for(i = 0; i < maxcount; i++){
-    //   var colour = colorScale(i);
-    //   console.log(colour);
-    //   var classtoselect = "c" + i;
-    //   // console.log(svg.selectAll(classtoselect));
-    //   var sele = svg.selectAll("rect");
-    //   sele.each(function(d){
-    //     console.log(d);
-    //   });
-    // }
-
     // svg.append("circle").attr("cx", 25).attr("cy", 25).attr("r", 25).style("fill", "#081d58");
 
 
+    var legendsvg = d3.select("#chart").append("svg")
+        .attr("id","legend")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", 100);
 
+    var legendwidth = 50;
+    for(i = 0; i < colors.length; i++){
+      legendsvg.append("rect")
+        .attr("x", function(d){return i*legendwidth;})
+        .attr("y", 0)
+        .attr("width", legendwidth)
+        .attr("height", 30)
+        .style("shape-rendering", "optimizeSpeed") //otherwise there are sometimes lines due to anti-aliasing
+        .style("fill", function(d){
+          return colors[i];
+        });
+    }
 
+    var text = legendsvg.selectAll("text")
+                        .data(colors)
+                        .enter()
+                        .append("text");
 
+                        var textlabels = text.attr("x",function(d,i){return i*legendwidth + 5})
+                          .attr("y", 40)
+                          .text(function(d,i){
+                            if(i == 8){
+                              return ">9";
+                            }
+                            return (i+1);
+                          })
+                          .attr("font-family", "sans-serif")
+                          .attr("font-size", "12px")
+                          .attr("fill", "black");
 
-
-    console.log("maxcoutn: " + maxcount);
+    // console.log("maxcoutn: " + maxcount);
 
     });//selection.each
   }//my

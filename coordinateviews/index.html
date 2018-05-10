@@ -12,9 +12,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
 	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
-	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/main.css"> -->
 
 
 </head>
@@ -30,15 +30,16 @@
 
 		<!-- On small screens fills the full grid, on medium+ ones only half -->
 		<div class="col-xs-12 col-md-6" id = "rtraj"> <!--Changed from 4 and 8 to 6 and 6, as they, contrary to the example, should be of same size? -->
-			<h2 id = "realheader">Real trajectories</h2>
-			<h3 id = "displayedtrajectories"><h3>
+			<h4 id = "realheader">Real trajectories</h4>
+			<h5 id = "displayedtrajectories"><h5>
 			<div class="barChart" id="realtraj"></div>
 		</div>
 
 		<!-- On small screens fills the full grid, on medium+ ones only half -->
 		<div class="col-xs-12 col-md-6" id = "straj">
-			<h2>Simulated trajectories</h2>
-			<div class="barChart" id="simtraj"></div>
+			<h4>Density</h4>
+			<h5>Heatmap over all trajectories   </h5>
+			<div class="barChart" id="chart"></div>
 		</div>
 
   </div>
@@ -46,11 +47,12 @@
 
 
 <!-- Crossfilter cdn -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script> -->
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 
 
+<script src="js/easyscript.js"></script>
 <script src="js/frameSeriesChart.js"></script>
 <script src="js/overviewChart.js"></script>
 <script src="js/main.js"></script>

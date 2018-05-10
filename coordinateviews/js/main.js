@@ -11,6 +11,7 @@ function doSomething(jsondata){
   var realtrajectories = overviewChart();
   var myslider = frameSeriesChart();
   var simtrajectories = overviewChart();
+  var hmap = easyscript();
 
   d3.json("data/datasim.json", function(datasim){
   simdata = datasim;
@@ -18,6 +19,7 @@ function doSomething(jsondata){
   var numpeople = d3.max(jsondata,function(d){
     return d.person;
   }) + 1;
+  console.log(numpeople);
   d3.select("#realheader").text("Showing " + numpeople + " real trajectories");
   //create slider
     d3.select("#frameline")
@@ -28,6 +30,11 @@ function doSomething(jsondata){
     // d3.select("#simtraj")
     //   .datum(simdata)
     //   .call(simtrajectories);
+    //
+    d3.select("#chart")
+      .datum(realdata)
+      .call(hmap);
+
 
   //create real trajectories
     d3.select("#realtraj")
