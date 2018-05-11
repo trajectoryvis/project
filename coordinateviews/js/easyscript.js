@@ -5,7 +5,7 @@ function easyscript(selection){
   var maxcount = 0;
   // var maxcount = 10;
   var margin = { top: 50, right: 0, bottom: 100, left: 30 },
-      width = 960 - margin.left - margin.right,
+      width = 730 - margin.left - margin.right,
       height = 430 - margin.top - margin.bottom + 35,
       gridSizeX = Math.floor(width / xpartitions),
       gridSizeY = Math.floor(width / ypartitions),
@@ -18,7 +18,7 @@ function easyscript(selection){
     selection.each(function(data){
 
     var smalldata = []; //only used for testing with fewer people
-    var numberOfPeople = 400;
+    var numberOfPeople = 500;
     var oldperson = -1;
     // console.log(data.length);
     for(i = 0; i < data.length; i++){

@@ -12,7 +12,7 @@ function overviewChart(selection){
   function my(selection){
     selection.each(function(data){
       var smalldata = []; //only used for testing with fewer people
-      var numberOfPeople = 20;
+      var numberOfPeople = 500;
       var intext = d3.select("#realheader").text();
       var intextarray = intext.split(" ");
       var actualtrajectories = parseInt(intextarray[1]);
