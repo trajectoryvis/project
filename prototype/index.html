@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>Trajectory visualisation</title>
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+</head>
+<body>
+<div class="container-fluid">
+	<!-- <h1>UCY Trajectories</h1> -->
+  <div class="row">
+		<div class="col-xs-12" id = "frames">
+			<h4>Frames</h4>
+			<div id="frameline"></div>
+		</div>
+
+
+
+		<div class="col-xs-12 col-md-6" id = "rtraj">
+			<h4 id = "realheader">Real trajectories</h4>
+			<h5 id = "displayedtrajectories"><h5>
+			<div class="barChart" id="realtraj"></div>
+		</div>
+
+
+		<div class="col-xs-12 col-md-6" id = "straj">
+			<h4>Density</h4>
+			<h5>Heatmap over all trajectories   </h5>
+			<div class="barChart" id="chart"></div>
+		</div>
+
+  </div>
+</div>
+
+<script src="https://d3js.org/d3.v4.min.js"></script>
+
+
+
+<script src="js/easyscript.js"></script>
+<script src="js/frameSeriesChart.js"></script>
+<script src="js/overviewChart.js"></script>
+<script src="js/main.js"></script>
+
+
+
+<script
+  src="https://code.jquery.com/jquery-3.2.1.min.js"
+  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</body>
+</html>
